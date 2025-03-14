@@ -7,8 +7,8 @@ import Loading from "@/app/loading";
 // import { SidebarProvider } from "../ui/sidebar";
 import { publicURL } from "@/lib/routes";
 import Header from "./app-header";
-import Sidebar from "@/components/ui/custom-sidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { Sidebar, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SideBarContent } from "@/components/ui/sidebarContent";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
@@ -29,10 +29,17 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
     if (!isPublicURL /*&& session.isLoggedIn*/) {
         return (
-            <>
-                <Header />
-                {children}
-                </>
+            <SidebarProvider>
+                <Sidebar>
+                    <SideBarContent />
+                </Sidebar>
+                <Header>
+                    <SidebarTrigger />
+                </Header>
+                <main className="w-full">
+                    {children}
+                </main>
+            </SidebarProvider>
         )
     }
 }

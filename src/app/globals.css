@@ -16,6 +16,17 @@ html body[data-scroll-locked] {
   margin-right: 0 !important;
 }
 
+@keyframes accordian-lr {
+  0%{
+    width: 0;
+    opacity: 0;
+  }
+  100%{
+    width: 100%;
+    opacity: 1;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -148,6 +159,7 @@ html body[data-scroll-locked] {
   --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
   --color-sidebar-border: hsl(var(--sidebar-border));
   --color-sidebar-ring: hsl(var(--sidebar-ring));
+  --animate-accordian-lr: accordian-lr;
 }
 
 @layer base {
