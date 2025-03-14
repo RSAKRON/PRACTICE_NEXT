@@ -25,6 +25,7 @@ import ToolTip from '@/components/ui/tooltipwrapper';
 import { AddDistrictModal } from '@/components/AddDistrictModal/AddDistrictModal';
 import { Pagination } from '@/components/ui/custom-pagination';
 import ContextMenu from '@/components/ui/custom-context-menu';
+import { useScreenType } from '@/hooks/useScreenType';
 
 interface Column {
     id: string;
@@ -65,6 +66,7 @@ export default function StateDistrictSettings() {
     // Utils Data
     const [loading, setLoading] = useState(true);
     const [searchInput, setSearchInput] = useState<string>("");
+    const screenType = useScreenType();
 
 
     // Initials
@@ -85,10 +87,9 @@ export default function StateDistrictSettings() {
 
     const columns: readonly Column[] = [
         { id: 'id', label: 'SR No.', align: "center", className:"w-[5%] sm:w-[5%]" },
-        { id: 'actionsmobile', label: 'ACTIONS', align: "center", className:"sm:hidden  w-[25%] sm:w-[0%] break-all" },
         { id: 'state', label: 'STATE', align: "center", className:"w-[30%] sm:w-[20%] break-all" },
-        { id: 'districts', label: 'DISTRICTS', align: "left",className:"w-[30%] sm:w-[70%] break-all" },
-        { id: 'actions', label: 'ACTIONS', align: "center", className: "hidden sm:table-cell sm:h-full w-[10%] sm:w-full break-all" },
+        { id: 'districts', label: 'DISTRICTS', align: "left",className:"w-[30%] sm:w-[60%] break-all" },
+        { id: 'actions', label: 'ACTIONS', align: "center", className: "hidden sm:table-cell sm:h-full w-[10%] sm:w-[15%] break-all" },
     ]
 
 
@@ -138,7 +139,7 @@ export default function StateDistrictSettings() {
                 if (!updatedState) {
                     throw new Error("State Not Found");
                 }
-                updatedState.districts.push({ id: newId, name: name });
+                updatedState.districts.unshift({ id: newId, name: name });
             }
             toast.success("Success!", {
                 description: "District added Successfully."
@@ -325,12 +326,12 @@ export default function StateDistrictSettings() {
             </div>
 
             {/* ###################################### Table with pagination ###################################### */}
-            <div className='w-[100%] overflow-auto sm:shadow-none shadow-[1px_2px_8px_gray] rounded-[7px]'>
+            <div className='w-[100%] overflow-auto sm:shadow-none'>
                 <div className='h-[60vh] sm:h-[450] px-4 overflow-auto'>
-                    <Table.Root>
+                    <Table.Root className='border-9 sm:px-4 sm:border-0  rounded-2xl'>
                         {/* ###################################### Table Columns Header ###################################### */}
                         <Table.Header>
-                            <Table.Row style={{ backgroundColor: "var(--color-background)" }}>
+                            <Table.Row >
                                 {columns.map((column) => (
                                     <Table.ColumnHeaderCell
                                         key={column.id}
@@ -341,7 +342,7 @@ export default function StateDistrictSettings() {
                                             backgroundColor: "var(--color-background)",
                                             color: "var(--color-text)",
                                         }}
-                                        className={column.className? column.className : ""}
+                                        className={column.className? `${column.className}` : ""}
                                     >
                                         {column.label}
                                     </Table.ColumnHeaderCell>
@@ -349,14 +350,14 @@ export default function StateDistrictSettings() {
                             </Table.Row>
                         </Table.Header>
                         {/* ###################################### Table Body ###################################### */}
-                        <Table.Body className='divide-y divide-accent-foreground'>
-                            {(filteredStates ? filteredStates : states).slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((state) => (
+                        <Table.Body className='divide-y divide-accent'>
+                            {(filteredStates ? filteredStates : states).slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((state, index) => (
                                 <Table.Row role="checkbox" className='h-full' key={state.id}>
 
-                                    <Table.RowHeaderCell className='h-full' align="center">{state.id}</Table.RowHeaderCell>
+                                    <Table.RowHeaderCell className='h-full' align="center">{index + 1}</Table.RowHeaderCell>
 
                                     {/* Actions for mobile */}
-                                    <Table.Cell align="center" className="h-full sm:hidden">
+                                    {/* <Table.Cell align="center" className="h-full sm:hidden">
                                         <div className="flex w-full justify-center items-center" onClick={()=>{setSelectedState(state)}}><MenuIcon /></div>
                                         <ContextMenu 
                                             items={
@@ -381,7 +382,7 @@ export default function StateDistrictSettings() {
                                             isOpen={(selectedState && (selectedState.id === state.id))? true: false}
                                             onClose={()=>{ setSelectedState(null); }}
                                         />
-                                    </Table.Cell>
+                                    </Table.Cell> */}
 
                                     <Table.Cell className='h-full' align="center">
                                         {isEditing && state.id === isEditing.id ? (
@@ -406,18 +407,19 @@ export default function StateDistrictSettings() {
                                     </Table.Cell>
 
                                     <Table.Cell align='left' className='h-full overflow-auto' >
-                                        <ExpandableList mappingValue={10} className='pb-4'>
-                                            {state.districts.map((district) => <Chip key={district.id} label={district.name} onRemove={() => { setSelectedState(state); setSelectedDistrict(district); setShowDeleteModal(true); }} onEdit={(input: string) => { setSelectedDistrict(district); setSelectedState(state); editDistrict(input) }} />)}
+                                        <ExpandableList mappingValue={(screenType==="phone")?5:10} className='pb-4'>
+                                            {state.districts.map((district, index) => <Chip key={index+1} label={district.name} onRemove={() => { setSelectedState(state); setSelectedDistrict(district); setShowDeleteModal(true); }} onEdit={(input: string) => { setSelectedDistrict(district); setSelectedState(state); editDistrict(input) }} />)}
                                         </ExpandableList>
+                                        <ToolTip title='Add District'><Button className='sm:hidden flex flex-col gap-0 transition-all duration-500 bg-emerald-700 text-white hover:bg-emerald-500 text-wrap' style={{ cursor: "pointer" }} onClick={() => { setSelectedState(state); setAddDistrict(true); setShowAddModal(true); }} >Add District</Button></ToolTip>
                                     </Table.Cell>
 
                                     <Table.Cell align="center" className="hidden sm:table-cell sm:h-full h-full">
-                                        <div className='hidden gap-2 justify-center items-center sm:flex sm:flex-col sm:gap-4'>
-                                            <ToolTip title='Add District'><Button className='flex flex-col gap-0 transition-all duration-500 bg-emerald-700 text-white hover:bg-emerald-500 w-[64px] rounded-sm h-5 text-[10px] text-wrap' style={{ cursor: "pointer" }} onClick={() => { setSelectedState(state); setAddDistrict(true); setShowAddModal(true); }} >Add District</Button></ToolTip>
-                                            <div className='flex sm:gap-2 justify-center items-center'>
+                                        <div className='hidden gap-2 justify-center items-center h-full sm:flex sm:flex-col sm:gap-4'>
+                                            <ToolTip title='Add District'><Button className='flex flex-col gap-0 transition-all max-w-[128px] duration-500 bg-emerald-500 h-max hover:bg-emerald-600 text-white' style={{ cursor: "pointer" }} onClick={() => { setSelectedState(state); setAddDistrict(true); setShowAddModal(true); }} >Add District</Button></ToolTip>
+                                            {/* <div className='flex sm:gap-2 justify-center items-center'>
                                                 <ToolTip title='Edit State Name'><EditIcon style={{ cursor: "pointer" }} onClick={() => setIsEditing(state)} /></ToolTip>
                                                 <ToolTip title='Delete State'><DeleteForeverIcon style={{ cursor: "pointer" }} onClick={() => { setSelectedState(state); setShowDeleteModal(true); }} /></ToolTip>
-                                            </div>
+                                            </div> */}
                                         </div>
                                         <div className="sm:hidden flex w-full justify-center items-center"><MenuIcon /></div>
                                     </Table.Cell>

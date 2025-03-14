@@ -7,6 +7,8 @@ import Loading from "@/app/loading";
 // import { SidebarProvider } from "../ui/sidebar";
 import { publicURL } from "@/lib/routes";
 import Header from "./app-header";
+import Sidebar from "@/components/ui/custom-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
@@ -30,7 +32,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <>
                 <Header />
                 {children}
-            </>
+                </>
         )
     }
 }

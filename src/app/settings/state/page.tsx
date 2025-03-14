@@ -89,7 +89,7 @@ export default function StateSettings() {
     const handleAdd = (input: string) => {
         setStates(prevStates => {
             const newId = prevStates.length > 0 ? Math.max(...prevStates.map(s => s.id)) + 1 : 1;
-            return [...prevStates, { id: newId, name: input, districts: [] }];
+            return [{ id: newId, name: input, districts: [] }, ...prevStates];
         });
         toast.success("Success!", {
             description: "State added Successfully."
@@ -153,9 +153,9 @@ export default function StateSettings() {
                     <Button className='flex gap-2 m-2' onClick={() => { setShowAddModal(true) }}><AddIcon /> Add State</Button>
                 </div>
             </div>
-            <div className='w-[100%] overflow-auto sm:shadow-none shadow-[1px_2px_8px_gray] rounded-[7px]'>
-                <div className='h-[60vh] sm:h-[450] px-4 overflow-auto'>
-                    <Table.Root>
+            <div className='w-[100%] overflow-auto'>
+                <div className='h-[58vh] sm:h-[450] px-4 overflow-auto'>
+                    <Table.Root className='border-9  rounded-2xl'>
                         <Table.Header>
                             <Table.Row style={{ backgroundColor: "var(--color-background)" }}>
                                 {columns.map((column) => (
@@ -174,9 +174,9 @@ export default function StateSettings() {
                             </Table.Row>
                         </Table.Header>
                         <Table.Body>
-                            {(filteredStates ? filteredStates : states).slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((state) => (
+                            {(filteredStates ? filteredStates : states).slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((state, index) => (
                                 <Table.Row role="checkbox" className='h-full' key={state.id}>
-                                    <Table.RowHeaderCell className='h-full' align="center">{state.id}</Table.RowHeaderCell>
+                                    <Table.RowHeaderCell className='h-full' align="center">{index+1}</Table.RowHeaderCell>
                                     <Table.Cell className='h-full' align="center">
                                         {isEditing && state.id === isEditing.id ? (
                                             <div className="flex gap-1 justify-center items-center">
@@ -200,8 +200,8 @@ export default function StateSettings() {
                                     </Table.Cell>
                                     <Table.Cell align="center" className="h-full">
                                         <div className='flex gap-2 justify-center items-center'>
-                                            <EditIcon style={{ cursor: "pointer" }} onClick={() => setIsEditing(state)} />
-                                            <DeleteForeverIcon style={{ cursor: "pointer" }} onClick={() => { setSelectedState(state); setShowDeleteModal(true); }} />
+                                            <EditIcon style={{ cursor: "pointer" }} className='text-primary' onClick={() => setIsEditing(state)} />
+                                            <DeleteForeverIcon style={{ cursor: "pointer" }} className='text-destructive' onClick={() => { setSelectedState(state); setShowDeleteModal(true); }} />
                                         </div>
                                     </Table.Cell>
                                 </Table.Row>

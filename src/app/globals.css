@@ -27,6 +27,8 @@ html body[data-scroll-locked] {
     --popover-foreground: 222.2 84% 4.9%;
     --primary: 210 79% 46%;
     --primary-hover: 210 79% 36%;
+    --emerald: 152 76% 80%;
+    --emerald-hover: 152 76% 70%;
     --primary-foreground: 210 40% 98%;
     --primary-foreground-hover: 210 40% 90%;
     --secondary: 210 40% 96.1%;
@@ -72,6 +74,8 @@ html body[data-scroll-locked] {
     --popover-foreground: 210 40% 98%;
     --primary: 210 79% 46%;
     --primary-hover: 210 79% 36%;
+    --emerald: 152 76% 25%;
+    --emerald-hover: 152 76% 20%;
     --primary-foreground: 222.2 47.4% 11.2%;
     --primary-foreground-hover: 222.2 47.4% 20%;
     --secondary: 217.2 32.6% 17.5%;
@@ -112,6 +116,8 @@ html body[data-scroll-locked] {
   --color-popover-foreground: hsl(var(--popover-foreground));
   --color-primary: hsl(var(--primary));
   --color-primary-hover: hsl(var(--primary-hover));
+  --color-emerald: hsl(var(--emerald));
+  --color-emerald-hover: hsl(var(--emerald-hover));
   --color-primary-foreground: hsl(var(--primary-foreground));
   --color-primary-foreground-hover: hsl(var(--primary-foreground-hover));
   --color-secondary: hsl(var(--secondary));

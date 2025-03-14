@@ -44,11 +44,9 @@ export function SingleInputDialogue({
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        <div>
-        <DialogDescription className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1">
           {description}
           <Input name="input" onChange={(e) => { setInput(e.target.value) }} />
-        </DialogDescription>
         </div>
         <DialogFooter className="flex justify-end gap-2">
           <Button variant="outline" onClick={onClose}>{cancelText}</Button>

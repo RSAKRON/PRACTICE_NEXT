@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { useState, ReactNode } from "react";
+import { useState, ReactNode, useEffect } from "react";
 import { ArrowBigLeft, ArrowBigLeftDash, CircleEllipsis } from "lucide-react";
 import ToolTip from "./tooltipwrapper";
 
@@ -12,12 +12,16 @@ interface ExpandableListProps {
 export default function ExpandableList({ children, mappingValue = 5, className = "" }: ExpandableListProps) {
   const [visibleCount, setVisibleCount] = useState(mappingValue);
 
+  useEffect(()=>{
+    setVisibleCount(mappingValue);
+  },[mappingValue])
+
   const showMore = () => {
-    setVisibleCount((prev) => prev + 10);
+    setVisibleCount((prev) => prev + mappingValue);
   };
 
   const showLess = () => {
-    setVisibleCount((prev) => prev - 10);
+    setVisibleCount((prev) => prev - mappingValue);
   }
 
   return (

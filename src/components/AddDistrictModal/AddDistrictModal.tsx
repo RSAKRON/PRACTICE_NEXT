@@ -1,7 +1,6 @@
 'use client';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { DialogDescription } from "@radix-ui/react-dialog";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
@@ -57,13 +56,13 @@ export function AddDistrictModal({
                 <DialogHeader>
                     <DialogTitle>Add District</DialogTitle>
                 </DialogHeader>
-                <DialogDescription className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2">
                     <div>Select a State and type in the name of the state you want to add.</div>
                     <Select placeholder="Select a State" className="w-full" onChange={(value)=>{setSelectedState(parseInt(value))}} value={selectedState?.toString() ?? ""}>
                         {states.map(state => <Item key={state.id} value={`${state.id}`}>{state.name}</Item>)}
                     </Select>
                     <Input name="input" onChange={(e) => { setInput(e.target.value) }} />
-                </DialogDescription>
+                </div>
                 <DialogFooter className="flex justify-end gap-2">
                     <Button variant="outline" onClick={onClose}>{cancelText}</Button>
                     <Button disabled={((selectedState !== null) && (input.length > 0)) ? false: true} onClick={handleConfirm}>{confirmText}</Button>
