@@ -30,13 +30,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     if (!isPublicURL /*&& session.isLoggedIn*/) {
         return (
             <SidebarProvider>
-                <Sidebar>
+                <Sidebar className="pt-14 bg-card dark:border-none">
                     <SideBarContent />
                 </Sidebar>
                 <Header>
                     <SidebarTrigger />
                 </Header>
-                <main className="w-full">
+                <main className="w-full px-2">
                     {children}
                 </main>
             </SidebarProvider>

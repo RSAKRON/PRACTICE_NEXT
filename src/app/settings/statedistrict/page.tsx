@@ -407,7 +407,7 @@ export default function StateDistrictSettings() {
                                     </Table.Cell>
 
                                     <Table.Cell align='left' className='h-full overflow-auto' >
-                                        <ExpandableList mappingValue={(screenType==="phone")?5:10} className='pb-4'>
+                                        <ExpandableList mappingValue={(screenType==="phone")?5:10} total={state.districts.length} className='pb-4'>
                                             {state.districts.map((district, index) => <Chip key={index+1} label={district.name} onRemove={() => { setSelectedState(state); setSelectedDistrict(district); setShowDeleteModal(true); }} onEdit={(input: string) => { setSelectedDistrict(district); setSelectedState(state); editDistrict(input) }} />)}
                                         </ExpandableList>
                                         <ToolTip title='Add District'><Button className='sm:hidden flex flex-col gap-0 transition-all duration-500 bg-emerald-700 text-white hover:bg-emerald-500 text-wrap' style={{ cursor: "pointer" }} onClick={() => { setSelectedState(state); setAddDistrict(true); setShowAddModal(true); }} >Add District</Button></ToolTip>

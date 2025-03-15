@@ -1,4 +1,4 @@
-const paths = [
+export const paths = [
   {
     name: "State",
     path: "/settings/state",
@@ -8,5 +8,3 @@ const paths = [
     path: "/settings/statedistrict",
   },
 ];
-
-export default paths;

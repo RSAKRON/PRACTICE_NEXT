@@ -27,6 +27,17 @@ html body[data-scroll-locked] {
   }
 }
 
+@keyframes accordian-down {
+  0%{
+    transform: translateY(-20%);
+    opacity: 0;
+  }
+  100%{
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -73,6 +84,7 @@ html body[data-scroll-locked] {
     --card-line: #A0A0A0;
     --icon-color: #6B7280;
     --dark-bgc: #2D3748;
+    --animate-down: accordian-down ease-out 0.2s;
   }
 
   .dark {
@@ -159,7 +171,7 @@ html body[data-scroll-locked] {
   --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
   --color-sidebar-border: hsl(var(--sidebar-border));
   --color-sidebar-ring: hsl(var(--sidebar-ring));
-  --animate-accordian-lr: accordian-lr;
+  --animate-accordian-down: var(--animate-down);
 }
 
 @layer base {

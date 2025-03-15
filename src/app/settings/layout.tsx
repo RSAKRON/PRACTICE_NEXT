@@ -1,4 +1,4 @@
-import paths from "@/lib/settingsRoutes";
+import {paths} from "@/lib/settingsRoutes";
 import Navbar from "@/components/ui/navbar";
 
 export default function RootLayout({
